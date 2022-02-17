@@ -8,7 +8,7 @@ React Query seems interesting, so lets try to learn it :=)
 ## 🚀 Installation
 1. clone this repository
   ```sh
-  git clone https://github.com/jkopi
+  git clone https://github.com/jkopi/product-app
   ```
 2. change to directory and run command `yarn install`
 
