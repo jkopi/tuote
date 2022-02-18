@@ -38,7 +38,7 @@ export const Products: React.FC = () => {
   return (
     <Flex p={4}>
       <Container maxW="container.lg">
-        <Text>All</Text>
+        <Text>All Products</Text>
         <SimpleGrid maxW="container.lg" columns={[2, null, 3]} spacing="2">
           {data?.products.map((product: Product) => (
             <ProductCard key={product.id} product={product} />
@@ -50,7 +50,6 @@ export const Products: React.FC = () => {
             onClick={() => {
               setSkip(0);
               setPages(1);
-              console.log('blyat');
             }}
             disabled={skip === 0}
           >
@@ -79,7 +78,7 @@ export const Products: React.FC = () => {
           >
             <Icon as={RiArrowRightSLine} fontSize="2xl" />
           </Button>
-          <Button ml="4" onClick={() => console.log('blyat')}>
+          <Button ml="4">
             <Icon as={RiArrowRightSFill} fontSize="2xl" />
           </Button>
         </Flex>
