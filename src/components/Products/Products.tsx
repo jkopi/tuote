@@ -23,10 +23,6 @@ export const Products: React.FC = () => {
     }
   );
 
-  // const {products, isLoading, error, isPreviousData, data} = useProducts();
-
-  const handleSkip = () => {};
-
   if (isLoading) {
     return <Skeleton height="20px" />;
   }

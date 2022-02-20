@@ -17,7 +17,7 @@ type Props = {
 
 export const MyModal: React.FC<Props> = ({ isOpen, onClose, children }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="5xl" closeOnEsc>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Shopping Cart</ModalHeader>

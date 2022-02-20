@@ -41,7 +41,10 @@ const ProductCard: React.FC<Props> = ({ product }) => {
               </Box>
             </Box>
             <Tooltip label="Add to cart" placement="left-end">
-              <Button colorScheme="facebook" onClick={() => {
+              <Button
+                colorScheme="facebook"
+                disabled={!!userContext?.cartItems.find(item => item.id === product.id)}
+                onClick={() => {
                 userContext?.addCartItem(product);
               }}>
                 <Icon as={RiShoppingCartLine} />
