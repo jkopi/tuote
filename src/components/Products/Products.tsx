@@ -17,10 +17,16 @@ export const Products = () => {
   const [pages, setPages] = useState<number>(1);
 
   const fetchProducts = async (skipAmount = 0) =>
-    await (await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skipAmount}`)).json();
+    await (
+      await fetch(
+        `https://dummyjson.com/products${
+          productContext?.category ? '/category/' + productContext.category : ''
+        }?limit=${limit}&skip=${skipAmount}`
+      )
+    ).json();
 
   const { isLoading, data, isPreviousData, isFetching, error } = useQuery(
-    ['products', skip],
+    ['products', productContext?.category,skip],
     () => fetchProducts(skip),
     {
       keepPreviousData: true,

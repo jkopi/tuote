@@ -16,7 +16,7 @@ export const ProductContext = createContext<
 function ProductProvider({ children }: ProviderProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  const selectCategory = (category: string) => console.log(category);
+  const selectCategory = (category: string) => setSelectedCategory(category);
 
   return (
     <ProductContext.Provider
