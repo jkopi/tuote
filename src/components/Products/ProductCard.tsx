@@ -6,11 +6,11 @@ import { RiShoppingCartLine } from 'react-icons/ri';
 import { Rating } from '.';
 import { UserContext } from '../../context/UserContext';
 
-type Props = {
+type ProductCardProps = {
   product: Product;
 };
 
-const ProductCard: React.FC<Props> = ({ product }) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const userContext = useContext(UserContext);
 
   return (

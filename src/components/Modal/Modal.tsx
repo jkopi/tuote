@@ -6,18 +6,19 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  ModalProps,
 } from '@chakra-ui/react';
 import React from 'react';
 
-type Props = {
+type MyModalProps = ModalProps & {
   isOpen: boolean;
   onClose: () => void;
   children?: React.ReactNode;
 };
 
-export const MyModal: React.FC<Props> = ({ isOpen, onClose, children }) => {
+export const MyModal = ({ isOpen, onClose, children, ...rest }: MyModalProps) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="5xl" closeOnEsc>
+    <Modal {...rest} isOpen={isOpen} onClose={onClose} size="5xl" closeOnEsc>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Shopping Cart</ModalHeader>

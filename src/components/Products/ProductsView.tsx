@@ -1,35 +1,45 @@
-import { Box, SimpleGrid, Skeleton, Flex, Container, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
+import { Box, Flex, Container, Text } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
-import { Product as IProduct } from '../../interfaces/Product';
 import { Breadcrumbs } from '.';
-import ProductCard from './ProductCard';
-import { fetchProducts, useProducts } from '../../requests';
-import { Products } from './Products';
-import { Product } from './Product';
 import { Outlet } from 'react-router-dom';
+import { Layout } from '../Layout';
+import { ProductContext } from '../../context/ProductContext';
 
-export const ProductsView: React.FC = () => {
-  const brands = useQuery('categories', () => fetch('https://dummyjson.com/products/categories').then(res => res.json()));
+export const ProductsView = () => {
+  const productContext = useContext(ProductContext);
+  const categories = useQuery('categories', () => fetch('https://dummyjson.com/products/categories').then(res => res.json()));
 
   return (
-    <Flex p={4}>
-      <Box maxH="full">
-        <Text fontSize="2xl" fontWeight="bold" color="linkedin.900">
-          Browse by categories
-        </Text>
-        {brands.data?.map((brand: string) => (
-          <Text key={brand} color="twitter.900">
-            {brand}
+    <Layout>
+      <Flex p={4}>
+        <Box maxH="full">
+          <Text fontSize="2xl" fontWeight="bold" color="linkedin.900">
+            Browse by categories
           </Text>
-        ))}
-      </Box>
-      <Container maxW="container.lg">
-        <Box>
-          <Breadcrumbs />
+          {categories.data?.map((brand: string) => (
+            <Text
+              key={brand}
+              cursor="pointer"
+              fontWeight="bold"
+              color="twitter.900"
+              _hover={{
+                color: "facebook.400",
+                textDecoration: "underline"
+              }}
+              onClick={() => productContext?.setCategory(brand)}
+            >
+              {brand}
+            </Text>
+          ))}
         </Box>
-        <Products />
-      </Container>
-    </Flex>
+        <Container maxW="container.lg">
+          <Box>
+            <Breadcrumbs />
+          </Box>
+          <Outlet />
+        </Container>
+      </Flex>
+    </Layout>
   );
 };

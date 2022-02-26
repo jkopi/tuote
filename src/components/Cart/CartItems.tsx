@@ -7,7 +7,7 @@ import { UserContext } from '../../context/UserContext';
 import { Product } from '../../interfaces/Product';
 import { originalPrice } from '../../utils/product';
 
-export const CartItems: React.FC = () => {
+export const CartItems = () => {
   const userContext = useContext(UserContext);
 
   if (userContext?.cartItems.length === 0) {

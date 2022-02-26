@@ -8,18 +8,21 @@ import { Product } from '../Products';
 import { CategoryList } from '../Category/CategoryList';
 import { useQuery } from 'react-query';
 import { UserProvider } from '../../context/UserContext';
+import { ProductProvider } from '../../context/ProductContext';
 
-type Props = {};
+type LayoutProps = {
+  children?: React.ReactNode;
+};
 
-export const Layout: React.FC = () => {
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <UserProvider>
-      <Container maxW="full" h="full" border={1} bg="gray.200">
-        <Navbar />
-        <main>
-          <Outlet/>
-        </main>
-      </Container>
+      <ProductProvider>
+        <Container maxW="full" h="full" border={1}>
+          <Navbar />
+          <main>{children}</main>
+        </Container>
+      </ProductProvider>
     </UserProvider>
   );
 };

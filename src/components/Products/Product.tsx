@@ -1,23 +1,23 @@
+import React, { useContext } from 'react';
 import { Box, Button, Container, Flex, Heading, Icon, Image, SimpleGrid, Text } from '@chakra-ui/react';
-import React from 'react';
 import { RiHeartLine } from 'react-icons/ri';
 import { useQuery } from 'react-query';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { originalPrice } from '../../utils/product';
-import { Breadcrumbs } from './Breadcrumbs';
 import { Rating } from './Rating';
+import { UserContext } from '../../context/UserContext';
+import { Loader } from '../Loader';
 
-export const Product: React.FC = () => {
+export const Product = () => {
+  const userContext = useContext(UserContext);
   const params = useParams();
-  const location = useLocation();
-  console.log(location.pathname.split('/'));
 
   const { isLoading, data, error } = useQuery(`product-${params.productId}`, () =>
     fetch(`https://dummyjson.com/products/${params.productId}`).then((res) => res.json())
   );
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   if (error) {
@@ -26,13 +26,8 @@ export const Product: React.FC = () => {
 
 
   return (
-    <Container maxH="full" maxW="container.lg">
-      <Flex p={2} justifyContent="start">
-        <Box mt="2" mb="2">
-          <Breadcrumbs />
-        </Box>
-      </Flex>
-      <SimpleGrid columns={[1, null, 2]}>
+    <Box maxH="full" maxW="container.lg">
+      <SimpleGrid columns={[1, null, 2]} pt="10" spacingX="4">
         <Box>
           <Image src={data.thumbnail} />
         </Box>
@@ -66,7 +61,12 @@ export const Product: React.FC = () => {
             </Box>
             <Text mt="2" mb="2">{data.stock} remaining</Text>
             <Flex>
-              <Button w="full" mr={2} bg="facebook.200">
+              <Button
+                w="full"
+                mr={2}
+                bg="facebook.200"
+                disabled={!!userContext?.cartItems.find(item => item.id === data.id)}
+                onClick={() => userContext?.addCartItem(data)}>
                 Add to cart
               </Button>
               <Button bg="red.300">
@@ -76,6 +76,6 @@ export const Product: React.FC = () => {
           </Box>
         </Box>
       </SimpleGrid>
-    </Container>
+    </Box>
   );
 };

@@ -1,19 +1,23 @@
 import { Box, SimpleGrid, Skeleton, Flex, Container, Text, Button, Icon } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { RiArrowLeftSFill, RiArrowLeftSLine, RiArrowRightSFill, RiArrowRightSLine } from 'react-icons/ri';
 import { useQuery } from 'react-query';
+import { ProductContext } from '../../context/ProductContext';
 import { Product } from '../../interfaces/Product';
 import { useProducts } from '../../requests';
+import { Loader } from '../Loader';
+import { Search } from '../Search';
 import ProductCard from './ProductCard';
 
-export const Products: React.FC = () => {
+export const Products = () => {
+  const productContext = useContext(ProductContext);
   // https://dummyjson.com/products?limit=9&skip=10
   const [limit, setLimit] = useState<number>(9); // limit of products
   const [skip, setSkip] = useState<number>(0); // how many products is wanted to be skipped
   const [pages, setPages] = useState<number>(1);
 
-  const fetchProducts = (skipAmount = 0) =>
-    fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skipAmount}`).then((res) => res.json());
+  const fetchProducts = async (skipAmount = 0) =>
+    await (await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skipAmount}`)).json();
 
   const { isLoading, data, isPreviousData, isFetching, error } = useQuery(
     ['products', skip],
@@ -24,7 +28,7 @@ export const Products: React.FC = () => {
   );
 
   if (isLoading) {
-    return <Skeleton height="20px" />;
+    return <Loader />;
   }
 
   if (error) {
@@ -33,10 +37,11 @@ export const Products: React.FC = () => {
 
   return (
     <Flex p={4}>
-      <Container maxW="container.lg">
-        <Text>All Products</Text>
+      <Box maxW="container.lg">
+        <Text pb="2">{productContext?.category}</Text>
+        <Search products={data} />
         <SimpleGrid maxW="container.lg" columns={[2, null, 3]} spacing="2">
-          {data?.products.map((product: Product) => (
+          {data?.products?.map((product: Product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </SimpleGrid>
@@ -78,7 +83,7 @@ export const Products: React.FC = () => {
             <Icon as={RiArrowRightSFill} fontSize="2xl" />
           </Button>
         </Flex>
-      </Container>
+      </Box>
     </Flex>
   );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import { ChakraProvider, ColorModeProvider, CSSReset, ThemeProvider } from '@chakra-ui/react';
 import theme from './config/chakra';
-import { Layout } from './components/Layout';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Routes, Route } from 'react-router-dom';
 import { Products, Product } from './components/Products';
 import { ProductsView } from './components/Products';
@@ -16,10 +15,11 @@ function App() {
       <ChakraProvider theme={theme}>
         <CSSReset />
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<ProductsView />} />
+          <Route element={<ProductsView />}>
+            <Route path="/" element={<Products/>} />
             <Route path="/products/:productId" element={<Product />} />
           </Route>
+          <Route path="*" element={<p>404</p>} />
         </Routes>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />

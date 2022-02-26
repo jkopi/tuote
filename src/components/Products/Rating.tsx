@@ -3,11 +3,11 @@ import React from 'react';
 import { Product } from '../../interfaces/Product';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
-type Props = {
+type RatingProps = {
   rating: number;
 }
 
-export const Rating: React.FC<Props> = ({ rating }) => {
+export const Rating = ({ rating }: RatingProps) => {
   const roundedRating = Math.round(rating * 2) / 2;
   
   return (

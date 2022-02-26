@@ -1,9 +1,9 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { Product } from '../interfaces/Product';
 import forage from '../config/localForage';
 import { useToast } from '@chakra-ui/react';
 
-type Props = {
+type ProviderProps = {
   children?: React.ReactNode;
 };
 
@@ -19,7 +19,7 @@ export const UserContext = createContext<
   | undefined
 >(undefined);
 
-function UserProvider({ children }: Props) {
+function UserProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [favorites, setFavorites] = useState<Product[]>([]);
 

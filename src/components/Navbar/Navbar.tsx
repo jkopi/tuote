@@ -1,24 +1,24 @@
 import { Box, Flex, Icon, IconButton, Text, useDisclosure } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { RiShoppingCartLine } from 'react-icons/ri';
+import { RiShoppingCartLine, RiHome4Line } from 'react-icons/ri';
 import { Modal } from '../Modal';
 import { CartItems } from '../Cart';
 import { UserContext } from '../../context/UserContext';
 import { css } from '@emotion/react';
 
-export const Navbar: React.FC = () => {
+export const Navbar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const userContext = useContext(UserContext);
 
   return (
     <>
-      <Box maxW="full" p="2" rounded="lg" border="1px solid green">
+      <Box maxW="full" p="2" rounded="lg">
         <Flex flexDirection="row" justify="space-between">
-          <Box p="4" mr="2" rounded="lg" bg="facebook.200">
-            <Text color="facebook.800">
-              <Link to="/">Home</Link>
-            </Text>
+          <Box p="4" mr="2" rounded="lg">
+            <Link to="/">
+              <Icon as={RiHome4Line} h="6" w="6" />
+            </Link>
           </Box>
           <IconButton
             css={css`

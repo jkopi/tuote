@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import React from 'react';
 
-const ColorSwitch: React.FC = () => {
+const ColorSwitch = () => {
   return <Button>tu duu</Button>
 }
 
