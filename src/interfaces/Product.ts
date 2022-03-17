@@ -7,7 +7,7 @@ export interface Product {
   rating: number; // decimal
   stock: number;
   brand: string;
-  category: string; // maybe array? let see
+  category: string;
   thumbnail: string; // img thumbnail
   images: string[];
 }

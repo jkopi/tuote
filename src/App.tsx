@@ -8,6 +8,8 @@ import { Products, Product } from './components/Products';
 import { ProductsView } from './components/Products';
 import { UserProvider } from './context/UserContext';
 import { ProductProvider } from './context/ProductContext';
+import { ErrorBoundary } from 'react-error-boundary';
+import { FallBack } from './components/ErrorBoundary';
 
 const queryClient = new QueryClient();
 
@@ -16,17 +18,19 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <CSSReset />
-        <UserProvider>
-          <ProductProvider>
-            <Routes>
-              <Route element={<ProductsView />}>
-                <Route path="/" element={<Products />} />
-                <Route path="/products/:productId" element={<Product />} />
-              </Route>
-              <Route path="*" element={<p>404</p>} />
-            </Routes>
-          </ProductProvider>
-        </UserProvider>
+        <ErrorBoundary FallbackComponent={FallBack}>
+          <UserProvider>
+            <ProductProvider>
+              <Routes>
+                <Route element={<ProductsView />}>
+                  <Route path="/" element={<Products />} />
+                  <Route path="/products/:productId" element={<Product />} />
+                </Route>
+                <Route path="*" element={<p>404</p>} />
+              </Routes>
+            </ProductProvider>
+          </UserProvider>
+        </ErrorBoundary>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

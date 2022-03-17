@@ -9,8 +9,7 @@ import { ProductContext } from '../../context/ProductContext';
 export const ProductsView = () => {
   const productContext = useContext(ProductContext);
   const categories = useQuery('categories', () => fetch('https://dummyjson.com/products/categories').then(res => res.json()));
-  console.log("selected:",productContext?.category)
-  
+
   return (
     <Layout>
       <Flex p={4}>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { Rating } from '.';
 import { UserContext } from '../../context/UserContext';
+import { originalPrice } from '../../utils/product';
 
 type ProductCardProps = {
   product: Product;
@@ -25,7 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Link>
         </Box>
         <Box p="2">
-          <Rating rating={product.rating}/>
+          <Rating rating={product.rating} />
         </Box>
         <Box p="2">
           <Flex mt="1" justifyContent="space-between" alignContent="center">
@@ -34,19 +35,28 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </Box>
           </Flex>
           <Flex justifyContent="space-between" alignContent="center">
-            <Box fontSize="2xl" color="gray.800">
-              {product.price}
-              <Box as="span" color="gray.800" fontSize="lg">
-                €
-              </Box>
+            <Box fontSize="xl" color="gray.800">
+              {product.discountPercentage ? (
+                <>
+                  <Text mr="2" fontSize="2xl" fontWeight="bold" color="red.400">
+                    {product.price},00 €
+                  </Text>
+                  <Text as="s" fontSize="xl" fontWeight="bold" color="gray.500">
+                    {originalPrice(product.price, product.discountPercentage)} €
+                  </Text>
+                </>
+              ) : (
+                <Text>{product.price}</Text>
+              )}
             </Box>
             <Tooltip label="Add to cart" placement="left-end">
               <Button
                 colorScheme="facebook"
-                disabled={!!userContext?.cartItems.find(item => item.id === product.id)}
+                disabled={!!userContext?.cartItems.find((item) => item.id === product.id)}
                 onClick={() => {
-                userContext?.addCartItem(product);
-              }}>
+                  userContext?.addCartItem(product);
+                }}
+              >
                 <Icon as={RiShoppingCartLine} />
               </Button>
             </Tooltip>

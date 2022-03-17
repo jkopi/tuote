@@ -1,14 +1,16 @@
 import { Box, Flex, Icon, IconButton, Text, useDisclosure } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { RiShoppingCartLine, RiHome4Line } from 'react-icons/ri';
+import { RiShoppingCartLine, RiHome4Line, RiLoginBoxLine, RiLogoutBoxLine } from 'react-icons/ri';
 import { Modal } from '../Modal';
-import { CartItems } from '../Cart';
 import { UserContext } from '../../context/UserContext';
 import { css } from '@emotion/react';
+import { Login } from '../Login';
+import { Cart } from '../Cart';
 
 export const Navbar = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { isOpen: isShoppingCartOpen, onClose: shoppingCartOnClose, onOpen: onShoppingCartOpen } = useDisclosure();
+  const { isOpen: isLoginOpen, onClose: loginOnClose, onOpen: onLoginOpen } = useDisclosure();
   const userContext = useContext(UserContext);
 
   return (
@@ -20,6 +22,19 @@ export const Navbar = () => {
               <Icon as={RiHome4Line} h="6" w="6" />
             </Link>
           </Box>
+          {/* <IconButton
+            aria-label="auth-icon"
+            icon={
+              userContext?.isAuthenticated ? (
+                <Box display="flex" alignItems="center" px="2">
+                  logged in <RiLogoutBoxLine />
+                </Box>
+              ) : (
+                <RiLoginBoxLine />
+              )
+            }
+            onClick={onLoginOpen}
+          /> */}
           <IconButton
             css={css`
               position: relative !important;
@@ -48,15 +63,18 @@ export const Navbar = () => {
                 )}
               </>
             }
-            onClick={onOpen}
+            onClick={onShoppingCartOpen}
           />
           {/* <Box p="4" rounded="lg" alignContent="center" bg="facebook.200">
             <Icon as={RiShoppingCartLine} cursor="pointer" color="facebook.800" onClick={onOpen} />
           </Box> */}
         </Flex>
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <CartItems />
+      <Modal isOpen={isShoppingCartOpen} onClose={shoppingCartOnClose} title="Shopping cart">
+        <Cart />
+      </Modal>
+      <Modal isOpen={isLoginOpen} onClose={loginOnClose} title="Login" btnText="Login">
+        <Login />
       </Modal>
     </>
   );

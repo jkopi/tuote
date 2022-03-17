@@ -2,36 +2,29 @@ import { Box, SimpleGrid, Skeleton, Flex, Container, Text, Button, Icon } from '
 import React, { useContext, useState } from 'react';
 import { RiArrowLeftSFill, RiArrowLeftSLine, RiArrowRightSFill, RiArrowRightSLine } from 'react-icons/ri';
 import { useQuery } from 'react-query';
+import forage from '../../config/localForage';
 import { ProductContext } from '../../context/ProductContext';
 import { Product } from '../../interfaces/Product';
-import { useProducts } from '../../requests';
+import { fetchPaginatedProducts } from '../../requests';
 import { Loader } from '../Loader';
 import { Search } from '../Search';
 import ProductCard from './ProductCard';
 
 export const Products = () => {
   const productContext = useContext(ProductContext);
-  // https://dummyjson.com/products?limit=9&skip=10
   const [limit, setLimit] = useState<number>(9); // limit of products
   const [skip, setSkip] = useState<number>(0); // how many products is wanted to be skipped
   const [pages, setPages] = useState<number>(1);
 
-  const fetchProducts = async (skipAmount = 0) =>
-    await (
-      await fetch(
-        `https://dummyjson.com/products${
-          productContext?.category ? '/category/' + productContext.category : ''
-        }?limit=${limit}&skip=${skipAmount}`
-      )
-    ).json();
-
-  const { isLoading, data, isPreviousData, isFetching, error } = useQuery(
+  const { isLoading, data, isPreviousData, error, status } = useQuery(
     ['products', productContext?.category,skip],
-    () => fetchProducts(skip),
+    () => fetchPaginatedProducts(productContext?.category, limit, skip),
     {
       keepPreviousData: true,
     }
   );
+
+  console.log(data, status)
 
   if (isLoading) {
     return <Loader />;
@@ -45,9 +38,9 @@ export const Products = () => {
     <Flex p={4}>
       <Box maxW="container.lg">
         <Text pb="2">{productContext?.category}</Text>
-        <Search products={data} />
+        {/* <Search /> */}
         <SimpleGrid maxW="container.lg" columns={[2, null, 3]} spacing="2">
-          {data?.products?.map((product: Product) => (
+          {status === 'success' && data?.products?.map((product: Product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </SimpleGrid>
@@ -82,10 +75,14 @@ export const Products = () => {
                 setPages((prev) => prev + 1);
               }
             }}
+            disabled={data!.length < 9}
           >
             <Icon as={RiArrowRightSLine} fontSize="2xl" />
           </Button>
-          <Button ml="4">
+          <Button
+            ml="4"
+            disabled={data!.length < 9}
+          >
             <Icon as={RiArrowRightSFill} fontSize="2xl" />
           </Button>
         </Flex>

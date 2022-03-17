@@ -15,6 +15,8 @@ export const UserContext = createContext<
       addFavorite: (favorite: Product) => void;
       getCartItems: () => Promise<Product[] | null | undefined>;
       removeCartItem: (id: number) => void;
+      authenticate: () => void;
+      isAuthenticated: boolean;
     }
   | undefined
 >(undefined);
@@ -22,6 +24,7 @@ export const UserContext = createContext<
 function UserProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [favorites, setFavorites] = useState<Product[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   // toaster
   const toast = useToast();
@@ -81,6 +84,8 @@ function UserProvider({ children }: ProviderProps) {
 
   const removeFavorite = (id: number) => setFavorites(favorites.filter((item) => item.id !== id));
 
+  const login = () => setIsAuthenticated(!isAuthenticated);
+
   return (
     <UserContext.Provider
       value={{
@@ -90,6 +95,8 @@ function UserProvider({ children }: ProviderProps) {
         addFavorite: addFavorite,
         getCartItems: getCartItems,
         removeCartItem: removeCartItem,
+        authenticate: login,
+        isAuthenticated: isAuthenticated,
       }}
     >
       {children}

@@ -1,7 +1,6 @@
 import localforage from 'localforage';
 
 // TODO
-function LocalForage(key: string) {
+export function useLocalForage(key: string) {
   return [];
 }
-export default LocalForage;
