@@ -3,7 +3,7 @@
 React Query seems interesting, so lets try to learn it :=)
 ## ✔️ Requirements
 - NodeJS
-- Yarn version 
+- Yarn
 
 ## 🚀 Installation
 1. clone this repository
