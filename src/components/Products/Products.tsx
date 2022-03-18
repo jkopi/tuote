@@ -75,13 +75,13 @@ export const Products = () => {
                 setPages((prev) => prev + 1);
               }
             }}
-            disabled={data!.length < 9}
+            disabled={data!.length <= 9}
           >
             <Icon as={RiArrowRightSLine} fontSize="2xl" />
           </Button>
           <Button
             ml="4"
-            disabled={data!.length < 9}
+            disabled={data!.length <= 9}
           >
             <Icon as={RiArrowRightSFill} fontSize="2xl" />
           </Button>
