@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ColorModeScript } from '@chakra-ui/react';
-import theme from './config/chakra';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(

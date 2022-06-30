@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { Rating } from '.';
 import { UserContext } from '../../context/UserContext';
-import { originalPrice } from '../../utils/product';
+import { originalPrice } from '../../utils';
 
 type ProductCardProps = {
   product: Product;

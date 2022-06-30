@@ -26,7 +26,6 @@ export const MyModal = ({ isOpen, onClose, title, btnText, children, ...rest }: 
         <ModalHeader>{title}</ModalHeader>
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
-          <Button onClick={() => alert('to be implemented..')}>{btnText}</Button>
           <Button onClick={onClose}>Close</Button>
         </ModalFooter>
       </ModalContent>

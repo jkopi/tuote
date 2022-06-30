@@ -1,11 +1,10 @@
-import { Flex, Box, Icon, Button, Text, Image, SimpleGrid, Stack, IconButton } from '@chakra-ui/react';
-import { css } from '@emotion/react';
+import { Box, Text, Image, SimpleGrid, IconButton, Button, Link } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { RiShareBoxLine, RiDeleteBinLine } from 'react-icons/ri';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { Product } from '../../interfaces';
-import { originalPrice } from '../../utils/product';
+import { originalPrice } from '../../utils';
 
 type Props = {
   item: Product;
@@ -14,6 +13,10 @@ type Props = {
 export const CartItem = ({ item }: Props) => {
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
+  const goTo = (route: string) => {
+
+    navigate(route);
+  };
 
   return (
     <SimpleGrid columns={[2, null, 5]} spacingX="20" borderBottom="1px" marginBottom="10" paddingBottom="2">
@@ -21,9 +24,9 @@ export const CartItem = ({ item }: Props) => {
         <Image src={item.thumbnail} width="120px" />
       </Box>
       <Box>
-        <Text fontSize="lg">{item.title}</Text>
+        <Link as={RouterLink} to={`/products/${item.id}`}>{item.title}</Link>
       </Box>
-      <Box>
+      {/* <Box>
         <IconButton
           py="2"
           aria-label="view-cart-item"
@@ -31,7 +34,7 @@ export const CartItem = ({ item }: Props) => {
           icon={<RiShareBoxLine />}
           onClick={() => navigate(`/products/${item.id}`)}
         />
-      </Box>
+      </Box> */}
       <Box alignItems="flex-end">
         <IconButton
           py="2"
