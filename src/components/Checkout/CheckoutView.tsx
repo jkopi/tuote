@@ -1,4 +1,4 @@
-import { Container, Flex } from '@chakra-ui/react'
+import { Box, Container, Divider, Flex } from '@chakra-ui/react'
 import { Outlet } from 'react-router-dom'
 import { Layout } from '../Layout'
 import { CheckoutSteps } from './CheckoutSteps'
@@ -6,12 +6,13 @@ import { CheckoutSteps } from './CheckoutSteps'
 export const CheckoutView = () => {
   return (
     <Layout>
-      <Flex>
+      <Box mt="8">
         <CheckoutSteps />
-        <Container>
+        <Box>
+          <Divider my="20px"/>
           <Outlet />
-        </Container>
-      </Flex>
+        </Box>
+      </Box>
     </Layout>
   )
 }
