@@ -58,9 +58,8 @@ export const Products = () => {
         </Text>
         <Stack align="flex-start" direction={{ sm: 'column' }}>
           {categories.data?.map((brand: string) => (
-            <Box pr="2">
+            <Box pr="2" key={brand}>
               <Text
-                key={brand}
                 cursor="pointer"
                 fontWeight="bold"
                 color="twitter.900"
@@ -119,10 +118,7 @@ export const Products = () => {
           >
             <Icon as={RiArrowRightSLine} fontSize="2xl" />
           </Button>
-          <Button
-            ml="4"
-            disabled={data!.length <= 9}
-          >
+          <Button ml="4" disabled={data!.length <= 9}>
             <Icon as={RiArrowRightSFill} fontSize="2xl" />
           </Button>
         </Flex>

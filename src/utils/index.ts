@@ -1,5 +1,7 @@
+import forage from '../config/localForage';
 import { Product } from '../interfaces';
 
+// returns the original price of an item
 export function originalPrice(price: number, discountPercentage: number): number {
   const discountedProductPrice = (price / 100) * discountPercentage;
   const originalProductPrice = Math.floor(price + discountedProductPrice);
@@ -7,6 +9,7 @@ export function originalPrice(price: number, discountPercentage: number): number
   return originalProductPrice;
 }
 
+// returns the total price of items in cart
 export function calculateTotalCartPrice(cartItems: Product[]): number {
   return cartItems.reduce((pre: number, cur: Product) => {
     const { price, discountPercentage } = cur;
@@ -30,4 +33,12 @@ export const generateUUID = () => {
     }
     return (c == 'x' ? r : (r & 0x7) | 0x8).toString(16);
   });
+};
+
+export const getCartItemsFromLocalStorage = () => {
+  const items = JSON.parse(localStorage.getItem('product-app/cart') ?? "");
+  if (items) {
+    return items as Product[];
+  }
+  return [];
 };

@@ -1,31 +1,27 @@
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbProps, BreadcrumbSeparator, Text } from '@chakra-ui/react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbProps, BreadcrumbSeparator, Text } from '@chakra-ui/react';
+import { Link, useParams } from 'react-router-dom';
 
 type BCProps = BreadcrumbProps & {
-  category?: string;
   productName?: string;
   children?: React.ReactNode;
 };
 
-export const Breadcrumbs = ({ category, children }: BCProps) => {
+export const Breadcrumbs = ({ children }: BCProps) => {
+  const params = useParams<{ category: string; productId: string }>();
   return (
     <Box>
-      <Text fontSize="5xl" fontWeight="thin">{category}</Text>
       <Breadcrumb>
         <BreadcrumbItem>
           <Text fontWeight="thin" color="facebook.800">
             <Link to="/products">Products</Link>
           </Text>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        {category && (
-          <BreadcrumbItem>
-            <Text fontWeight="thin" color="facebook.800">
-              {category}
-            </Text>
-          </BreadcrumbItem>
-        )}
+        <BreadcrumbItem>
+          <Text fontWeight="thin" color="facebook.800">
+            {params.category}
+          </Text>
+        </BreadcrumbItem>
       </Breadcrumb>
     </Box>
   );

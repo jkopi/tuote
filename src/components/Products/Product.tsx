@@ -1,5 +1,17 @@
 import React, { useContext, useEffect } from 'react';
-import { AspectRatio, Box, Button, Container, Divider, Flex, Heading, Icon, Image, SimpleGrid, Text } from '@chakra-ui/react';
+import {
+  AspectRatio,
+  Box,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react';
 import { RiHeartLine } from 'react-icons/ri';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
@@ -9,6 +21,7 @@ import { UserContext } from '../../context/UserContext';
 import { Loader } from '../Loader';
 import { ProductContext } from '../../context/ProductContext';
 import { useProduct } from '../../hooks/query';
+import { ProductSkeleton } from './ProductSkeleton';
 
 export const Product = () => {
   const userContext = useContext(UserContext);
@@ -19,7 +32,7 @@ export const Product = () => {
   const { isLoading, data, error } = useProduct(productId ?? '');
 
   if (isLoading) {
-    return <Loader />;
+    return <ProductSkeleton/>;
   }
 
   if (error) {

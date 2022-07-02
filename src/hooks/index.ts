@@ -1,1 +1,2 @@
-export { useLocalForage } from './useLocalForage';
+export let asd = "asd";
+// export { useLocalForage } from './useLocalForage';

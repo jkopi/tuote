@@ -16,27 +16,13 @@ export const Navbar = () => {
 
   return (
     <>
-      <Box maxW="full" p="2" rounded="lg" backgroundColor="facebook.200">
+      <Box maxW="full" p="2" backgroundColor="facebook.200">
         <Flex flexDirection="row" justify="space-between" alignItems="center" mx="20">
           <Box rounded="lg">
             <Link to="/">
               <Image src={Logo} height="10" width="10" />
-              {/* <Icon as={RiHome4Line} h="6" w="6" /> */}
             </Link>
           </Box>
-          {/* <IconButton
-            aria-label="auth-icon"
-            icon={
-              userContext?.isAuthenticated ? (
-                <Box display="flex" alignItems="center" px="2">
-                  logged in <RiLogoutBoxLine />
-                </Box>
-              ) : (
-                <RiLoginBoxLine />
-              )
-            }
-            onClick={onLoginOpen}
-          /> */}
           <IconButton
             py="2"
             aria-label="cart-notification"

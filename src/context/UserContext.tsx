@@ -1,7 +1,8 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Product } from '../interfaces/Product';
 import forage from '../config/localForage';
 import { useToast } from '@chakra-ui/react';
+import { getCartItemsFromLocalStorage } from '../utils';
 
 type ProviderProps = {
   children?: React.ReactNode;
@@ -25,6 +26,18 @@ function UserProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [favorites, setFavorites] = useState<Product[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  useEffect(() => {
+    const getStoredCart = async () => {
+      try {
+        const res = await forage.getItem<Product[]>('cart');
+        setCartItems(res ?? []);
+      } catch (error) {
+        return [];
+      }
+    };
+    getStoredCart();
+  }, []);
 
   // toaster
   const toast = useToast();
@@ -80,11 +93,14 @@ function UserProvider({ children }: ProviderProps) {
     console.log(favorites);
   };
 
-  const removeCartItem = (id: number) => setCartItems(cartItems.filter((item) => item.id !== id));
-
+  const removeCartItem = (id: number) => {
+    forage.removeItem('cart');
+    setCartItems(cartItems.filter((item) => item.id !== id));
+  };
   const removeFavorite = (id: number) => setFavorites(favorites.filter((item) => item.id !== id));
 
-  const login = () => setIsAuthenticated(!isAuthenticated);
+  const login = () => setIsAuthenticated(true);
+  const logout = () => setIsAuthenticated(false);
 
   return (
     <UserContext.Provider

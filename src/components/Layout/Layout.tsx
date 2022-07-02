@@ -8,9 +8,9 @@ type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <Container maxW="full" h="full">
+    <main>
       <Navbar />
-      <main>{children}</main>
-    </Container>
+      <Container maxW="full" h="full">{children}</Container>
+    </main>
   );
 };

@@ -18,10 +18,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <Flex p="2" w="full">
       <Box maxW="xs" w="full" bg="white" borderWidth="1px" overflow="hidden" rounded="lg" shadow="lg">
         <Flex justify="center">
-          <Image src={product.thumbnail} maxH="xs" objectFit="cover" roundedTop="lg" alt={product.description} />
+          <Image src={product.thumbnail} h={300} w={300} objectFit="contain" roundedTop="lg" alt={product.description} />
         </Flex>
         <Box p="2" fontSize="2xl" fontWeight="semibold" lineHeight="tight" color="facebook.800" isTruncated>
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${product.category}/${product.id}`}>
             <Text>{product.title}</Text>
           </Link>
         </Box>

@@ -11,7 +11,7 @@ export const Rating = ({ rating }: RatingProps) => {
   const roundedRating = Math.round(rating * 2) / 2;
   
   return (
-    <Tooltip label={rating} placement="left-start">
+    <Tooltip label={rating} placement="bottom-start">
       <Box alignItems="center">
         {Array(5).fill('').map((_, i) => (
           roundedRating - i >= 1

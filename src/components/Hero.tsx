@@ -11,7 +11,7 @@ export const Hero = () => {
       }} maxW="full" border="1px">
       <Flex width="full" height="full" justifyContent="center" alignItems="center" flexDir="column">
       {/* <Image src={HeroBg} position="absolute" width="100%" height="100%" zIndex="hide" /> */}
-        <Image width="lg" src={TuoteLogo} alt="tuote logo" />
+        <Image width="md" src={TuoteLogo} alt="tuote logo" />
         <Text fontSize="2xl" marginTop="5">
           A fictional shopping application made by utilizing{' '}
           <Link href="https://dummyjson.com/" color="facebook.300" isExternal>
