@@ -10,8 +10,9 @@ import { UserProvider } from './context/UserContext';
 import { ProductProvider } from './context/ProductContext';
 import { ErrorBoundary } from 'react-error-boundary';
 import { FallBack } from './components/ErrorBoundary';
-import { Checkout, CheckoutView } from './components/Checkout';
+import { Checkout, CheckoutConfirmation, CheckoutPayment, CheckoutView } from './components/Checkout';
 import { LandingView } from './components/Landing';
+import { CheckoutProvider } from './context/CheckoutContext';
 
 const queryClient = new QueryClient();
 
@@ -22,19 +23,23 @@ function App() {
         <CSSReset />
         <ErrorBoundary FallbackComponent={FallBack}>
           <UserProvider>
-            <ProductProvider>
-              <Routes>
-                <Route path="/" element={<LandingView />} />
-                <Route element={<ProductsView />}>
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/products/:category/:productId" element={<Product />} />
-                </Route>
-                <Route element={<CheckoutView />}>
-                  <Route path="/checkout" element={Checkout} />
-                </Route>
-                <Route path="*" element={<p>404</p>} />
-              </Routes>
-            </ProductProvider>
+            <CheckoutProvider>
+              <ProductProvider>
+                <Routes>
+                  <Route path="/" element={<LandingView />} />
+                  <Route element={<ProductsView />}>
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/products/:category/:productId" element={<Product />} />
+                  </Route>
+                  <Route element={<CheckoutView />}>
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/checkout/payment" element={<CheckoutPayment />} />
+                    <Route path="/checkout/confirmation/:confirmationId" element={<CheckoutConfirmation />} />
+                  </Route>
+                  <Route path="*" element={<p>404</p>} />
+                </Routes>
+              </ProductProvider>
+            </CheckoutProvider>
           </UserProvider>
         </ErrorBoundary>
       </ChakraProvider>
