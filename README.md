@@ -1,6 +1,6 @@
-# Product App
+# tuote
 
-React Query seems interesting, so lets try to learn it :=)
+A fictional shopping app made with [DummyJSON product API](https://dummyjson.com/docs/products)
 ## ✔️ Requirements
 - NodeJS
 - Yarn
