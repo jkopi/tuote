@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChakraProvider, ColorModeProvider, CSSReset, ThemeProvider } from '@chakra-ui/react';
 import theme from './config/chakra';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Routes, Route } from 'react-router-dom';
 import { Products, Product } from './components/Products';
@@ -14,7 +14,8 @@ import { Checkout, CheckoutConfirmation, CheckoutPayment, CheckoutView } from '.
 import { LandingView } from './components/Landing';
 import { CheckoutProvider } from './context/CheckoutContext';
 
-const queryClient = new QueryClient();
+const queryCache = new QueryCache();
+export const queryClient = new QueryClient({ queryCache });
 
 function App() {
   return (

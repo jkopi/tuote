@@ -23,7 +23,7 @@ export const CartItems = () => {
     <>
       <Box>
         {userContext?.cartItems.map((product: Product) => (
-          <CartItem item={product} />
+          <CartItem key={product.id} item={product} />
         ))}
       </Box>
       <SimpleGrid columns={3} alignSelf="end">

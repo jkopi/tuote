@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { CheckoutContext, Delivery } from '../../context/CheckoutContext';
 
 import { UserContext } from '../../context/UserContext';
-import { calculateTotalCartPrice } from '../../utils';
 import { OrderSummary } from './OrderSummary';
 
 export const Checkout = () => {

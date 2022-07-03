@@ -8,6 +8,7 @@ import { fetchPaginatedProducts } from '../../requests';
 import { Loader } from '../Loader';
 import ProductCard from './ProductCard';
 import { useCategories } from '../../hooks/query';
+import { queryClient } from '../../App';
 
 export const Products = () => {
   const productContext = useContext(ProductContext);
@@ -23,6 +24,13 @@ export const Products = () => {
     ['products', productContext?.category, skip],
     () => fetchPaginatedProducts(productContext?.category, limit, skip),
     {
+      initialData: () => {
+        const initialProducts = queryClient.getQueryData<Product[]>(['products', '', 0]) ?? [];
+        if (initialProducts.length > 0) {
+          return initialProducts;
+        }
+        return undefined;
+      },
       keepPreviousData: true,
     }
   );
