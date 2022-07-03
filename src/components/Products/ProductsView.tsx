@@ -7,7 +7,7 @@ import { useContext } from 'react';
 export const ProductsView = () => {
   return (
     <Layout>
-      <Container minW="container.xl" marginTop="5">
+      <Container maxW="container.xl" marginTop="5">
         {/* <Breadcrumbs category={productContext?.category} /> */}
         <Breadcrumbs />
         <Outlet />

@@ -46,7 +46,7 @@ export const Product = () => {
   return (
     <Box>
       {data && (
-        <Flex pt="10" flexDirection={{ lg: 'row', md: 'column', sm: 'column' }}>
+        <Flex pt="10" flexDirection={{sm: 'row' }}>
           <Box marginRight={{ lg: '4' }}>
             <Image src={data.thumbnail} alt={data.title} objectFit="cover" />
           </Box>

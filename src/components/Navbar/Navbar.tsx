@@ -17,7 +17,7 @@ export const Navbar = () => {
   return (
     <>
       <Box maxW="full" p="2" backgroundColor="facebook.200">
-        <Flex flexDirection="row" justify="space-between" alignItems="center" mx="20">
+        <Flex flexDirection="row" justify="space-between" alignItems="center">
           <Box rounded="lg">
             <Link to="/">
               <Image src={Logo} height="10" width="10" />

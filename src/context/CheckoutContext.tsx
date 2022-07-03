@@ -1,4 +1,5 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
+import { generateUUID } from '../utils';
 
 type ProviderProps = {
   children: React.ReactNode;
@@ -36,7 +37,7 @@ function CheckoutProvider({ children }: ProviderProps) {
         phase: phase,
         setPhase: phaseSetter,
         deliveryMethod: deliveryMethod,
-        setDeliveryMethod: deliverySetter
+        setDeliveryMethod: deliverySetter,
       }}
     >
       {children}

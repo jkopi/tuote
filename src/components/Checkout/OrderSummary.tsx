@@ -12,9 +12,6 @@ type Props = {
 export const OrderSummary = ({ cartItems, deliveryMethod }: Props) => {
   return (
     <Box>
-      <Text fontSize="lg" mb="10px">
-        Order summary
-      </Text>
       {cartItems?.map((item) => (
         <React.Fragment key={item.title}>
           <Flex gap="6">

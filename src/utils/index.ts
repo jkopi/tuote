@@ -18,7 +18,10 @@ export function calculateTotalCartPrice(cartItems: Product[]): number {
   }, 0);
 }
 
-// https://stackoverflow.com/a/8809472
+/**
+ * Shamelessly copied from https://stackoverflow.com/a/8809472
+ * @returns uuid string
+ */
 export const generateUUID = () => {
   let d = new Date().getTime(),
     d2 = (performance && performance.now && performance.now() * 1000) || 0;

@@ -12,6 +12,7 @@ type ContextProps = {
   addCartItem: (item: Product) => void;
   getCartItems: () => Promise<Product[] | null | undefined>;
   removeCartItem: (id: number) => void;
+  clearCart: () => void;
   authenticate: () => void; // TODO auth
   isAuthenticated: boolean; // TODO auth
 };
@@ -20,7 +21,6 @@ export const UserContext = createContext<ContextProps | undefined>(undefined);
 
 function UserProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState<Product[]>([]);
-  const [favorites, setFavorites] = useState<Product[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
@@ -73,21 +73,6 @@ function UserProvider({ children }: ProviderProps) {
     }
   };
 
-  const addFavorite = (favorite: Product) => {
-    forage
-      .setItem('favorites', favorite)
-      .then(() => {
-        // TODO: trigger toast alert
-        setFavorites((prev) => [...prev, favorite]);
-      })
-      .catch((err: Error) => {
-        // TODO: trigger toast alert
-        console.error(err);
-      });
-
-    console.log(favorites);
-  };
-
   const removeCartItem = async (id: number) => {
     try {
       // return array of cartItems without the deleted item
@@ -95,6 +80,15 @@ function UserProvider({ children }: ProviderProps) {
       setCartItems(filtered);
       // set filtered result to localStorage
       await forage.setItem<Product[]>('cart', filtered);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      setCartItems([]);
+      await forage.removeItem('cart');
     } catch (error) {
       console.error(error);
     }
@@ -111,6 +105,7 @@ function UserProvider({ children }: ProviderProps) {
         addCartItem: addCartItem,
         getCartItems: getCartItems,
         removeCartItem: removeCartItem,
+        clearCart: clearCart,
         authenticate: login,
         isAuthenticated: isAuthenticated,
       }}
