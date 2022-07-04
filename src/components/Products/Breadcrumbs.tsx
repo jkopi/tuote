@@ -13,12 +13,12 @@ export const Breadcrumbs = ({ children }: BCProps) => {
     <Box>
       <Breadcrumb>
         <BreadcrumbItem>
-          <Text fontWeight="thin" color="facebook.800">
+          <Text fontWeight="thin" colorScheme="facebook">
             <Link to="/products">Products</Link>
           </Text>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <Text fontWeight="thin" color="facebook.800">
+          <Text fontWeight="thin" colorScheme="facebook">
             {params.category}
           </Text>
         </BreadcrumbItem>

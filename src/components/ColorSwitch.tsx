@@ -1,8 +1,18 @@
-import { Button } from '@chakra-ui/react';
-import React from 'react';
+import { Button, IconButton, useColorMode } from '@chakra-ui/react';
+import { RiMoonLine, RiSunLine } from 'react-icons/ri';
 
 const ColorSwitch = () => {
-  return <Button>tu duu</Button>
-}
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <IconButton
+      aria-label="color mode toggle button"
+      colorScheme="facebook"
+      onClick={toggleColorMode}
+      icon={colorMode === 'dark' ? <RiSunLine /> : <RiMoonLine />}
+      py="2"
+      size="lg"
+    />
+  );
+};
 
 export default ColorSwitch;

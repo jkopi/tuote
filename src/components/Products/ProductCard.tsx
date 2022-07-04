@@ -16,14 +16,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const userContext = useContext(UserContext);
 
   return (
-    <Box
-      maxW="sm"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      cursor="pointer"
-    >
-      <Image src={product.thumbnail} h={300} w={300} objectFit="contain" roundedTop="lg" alt={product.description} />
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" cursor="pointer">
+      <Image
+        src={product.thumbnail}
+        h={300}
+        w={300}
+        objectFit="contain"
+        roundedTop="lg"
+        alt={product.description}
+        onClick={() => navigate(`/products/${product.category}/${product.id}`)}
+      />
       <Box p="6">
         <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
           {product.title}

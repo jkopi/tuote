@@ -48,14 +48,14 @@ export const Products = () => {
       {/* Categories */}
       <Box mt="4" w={{ sm: 'sm' }}>
         <Box mb="2">
-          <Text fontSize="2xl" fontWeight="bold" color="linkedin.900">
+          <Text fontSize="2xl" fontWeight="bold" colorScheme="facebook">
             Category
           </Text>
         </Box>
         <Text
           cursor="pointer"
           fontWeight="bold"
-          color="black"
+          colorScheme="facebook"
           _hover={{
             color: 'facebook.400',
             textDecoration: 'underline',
@@ -70,7 +70,7 @@ export const Products = () => {
               <Text
                 cursor="pointer"
                 fontWeight="bold"
-                color="twitter.900"
+                colorScheme="facebook"
                 _hover={{
                   color: 'facebook.400',
                   textDecoration: 'underline',
