@@ -9,14 +9,13 @@ type ModalContent = {
   title: string;
 };
 
-export const ModalContext = createContext<
-  | {
-      title: string;
-      open: (content: ModalContent) => void;
-      close: () => void;
-    }
-  | undefined
->(undefined);
+type ContextProps = {
+  title: string;
+  open: (content: ModalContent) => void;
+  close: () => void;
+};
+
+export const ModalContext = createContext<ContextProps | undefined>(undefined);
 
 const ModalProvider = ({ children }: ProviderProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,7 +33,7 @@ const ModalProvider = ({ children }: ProviderProps) => {
 
   return (
     <ModalContext.Provider value={{ open: handleModalOpen, close: handleModalClose, title: modalContent }}>
-        {children}
+      {children}
     </ModalContext.Provider>
   );
 };

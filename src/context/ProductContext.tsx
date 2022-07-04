@@ -9,19 +9,17 @@ export enum FilterBy {
   ORIGINAL = 'ORIGINAL',
 }
 
-// a helper context for maintaining selected product category and other things
-export const ProductContext = createContext<
-  | {
-      category: string;
-      selectedProduct: string;
-      setProduct: (name: string) => void;
-      setCategory: (category: string) => void;
-      searchHistory?: string[];
-      filterRule: FilterBy;
-      setFilterRule: (rule: FilterBy) => void;
-    }
-  | undefined
->(undefined);
+type ContextProps = {
+  category: string;
+  selectedProduct: string;
+  setProduct: (name: string) => void;
+  setCategory: (category: string) => void;
+  searchHistory?: string[];
+  filterRule: FilterBy;
+  setFilterRule: (rule: FilterBy) => void;
+};
+
+export const ProductContext = createContext<ContextProps | undefined>(undefined);
 
 function ProductProvider({ children }: ProviderProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
