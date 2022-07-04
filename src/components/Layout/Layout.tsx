@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Flex } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 import { Navbar } from '../Navbar';
 
 type LayoutProps = {
@@ -10,7 +10,7 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <main>
       <Navbar />
-      <Container maxW="full" h="full">{children}</Container>
+      <Container maxW="full" maxH="full">{children}</Container>
     </main>
   );
 };

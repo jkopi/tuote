@@ -1,13 +1,11 @@
-import { Box, Flex, Icon, IconButton, Image, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Text, useDisclosure } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { RiShoppingCartLine, RiHome4Line, RiLoginBoxLine, RiLogoutBoxLine, RiShoppingCartFill } from 'react-icons/ri';
+import { RiShoppingCartFill } from 'react-icons/ri';
 import { Modal } from '../Modal';
 import { UserContext } from '../../context/UserContext';
-import { css } from '@emotion/react';
 import { Login } from '../Login';
 import { Cart } from '../Cart';
-import Logo from '../../assets/Logo.svg';
 import ColorSwitch from '../ColorSwitch';
 
 export const Navbar = () => {
@@ -19,9 +17,9 @@ export const Navbar = () => {
     <>
       <Box maxW="full" p="2" backgroundColor="facebook.500">
         <Flex flexDirection="row" justify="space-between" alignItems="center">
-          <Box rounded="lg">
+          <Box rounded="lg" p="2">
             <Link to="/">
-              <Image src={Logo} height="10" width="10" />
+              <Text color="white" fontSize="xl" fontFamily="fantasy">tuote</Text>
             </Link>
           </Box>
           <Box display="flex" gap="5">
