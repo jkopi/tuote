@@ -1,10 +1,10 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { Product } from '../interfaces';
-import { fetchProduct } from '../requests';
+import { fetchCategories, fetchProduct } from '../requests';
 
 // fetch categories from api
 export function useCategories(): UseQueryResult<string[], Error> {
-  return useQuery('categories', () => fetch('https://dummyjson.com/products/categories').then((res) => res.json()));
+  return useQuery('categories', () => fetchCategories());
 }
 
 // fetch a single product by id

@@ -7,7 +7,7 @@ export const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <Flex h="container.md" justifyContent="center" alignItems="center" flexDir={{ base: "row" }}>
+    <Box h="calc(100vh - 10vh)" display="flex" justifyContent="center" alignItems="center" flexDir={{ base: "row" }}>
       <Box maxW="lg">
         <Heading as="h1" fontSize="6xl" fontFamily="monospace">
           tuote
@@ -24,6 +24,6 @@ export const Hero = () => {
       <Box>
         <Image w={250} src={ProductPic} rounded="3xl" />
       </Box>
-    </Flex>
+    </Box>
   );
 };

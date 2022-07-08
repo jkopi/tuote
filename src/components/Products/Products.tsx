@@ -1,6 +1,27 @@
-import React, { useContext, useState } from 'react';
-import { Box, SimpleGrid, Flex, Text, Button, Icon, VStack, Stack } from '@chakra-ui/react';
-import { RiArrowLeftSFill, RiArrowLeftSLine, RiArrowRightSFill, RiArrowRightSLine } from 'react-icons/ri';
+import React, { useContext, useRef, useState } from 'react';
+import {
+  Box,
+  SimpleGrid,
+  Flex,
+  Text,
+  Button,
+  Icon,
+  useMediaQuery,
+  Drawer,
+  useDisclosure,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  DrawerHeader,
+  DrawerCloseButton,
+} from '@chakra-ui/react';
+import {
+  RiArrowLeftSFill,
+  RiArrowLeftSLine,
+  RiArrowRightSFill,
+  RiArrowRightSLine,
+  RiFilterFill,
+} from 'react-icons/ri';
 import { useQuery } from 'react-query';
 import { ProductContext } from '../../context/ProductContext';
 import { Product } from '../../interfaces/Product';
@@ -9,12 +30,19 @@ import { Loader } from '../Loader';
 import ProductCard from './ProductCard';
 import { useCategories } from '../../hooks/query';
 import { queryClient } from '../../App';
+import { CategoryList } from '../Category/CategoryList';
+import { breakpoints } from '../../config/chakra';
+import { useAppMediaQuery } from '../../hooks';
 
 export const Products = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef<HTMLButtonElement>(null);
   const productContext = useContext(ProductContext);
   const [limit, setLimit] = useState<number>(9); // limit of products
   const [skip, setSkip] = useState<number>(0); // how many products is wanted to be skipped
   const [pages, setPages] = useState<number>(1); // how many pages of products
+
+  const { largerThanMd } = useAppMediaQuery();
 
   // get categories from react-query hook
   const categories = useCategories();
@@ -44,93 +72,77 @@ export const Products = () => {
   }
 
   return (
-    <Flex flexDir={{ lg: 'row', sm: 'column' }}>
-      {/* Categories */}
-      <Box mt="4" w={{ sm: 'sm' }}>
-        <Box mb="2">
-          <Text fontSize="2xl" fontWeight="bold" colorScheme="facebook">
-            Category
-          </Text>
-        </Box>
-        <Text
-          cursor="pointer"
-          fontWeight="bold"
-          colorScheme="facebook"
-          _hover={{
-            color: 'facebook.400',
-            textDecoration: 'underline',
-          }}
-          onClick={() => productContext?.setCategory('')}
-        >
-          All categories
-        </Text>
-        <Stack align="flex-start" direction={{ sm: 'column' }}>
-          {categories.data?.map((brand: string) => (
-            <Box pr="2" key={brand}>
-              <Text
-                cursor="pointer"
-                fontWeight="bold"
-                colorScheme="facebook"
-                _hover={{
-                  color: 'facebook.400',
-                  textDecoration: 'underline',
-                }}
-                onClick={() => productContext?.setCategory(brand)}
-              >
-                {brand}
-              </Text>
-            </Box>
-          ))}
-        </Stack>
-      </Box>
-      <Box maxW="container.lg">
-        {/* Products */}
-        <SimpleGrid maxW="container.lg" columns={[2, null, 3]} spacing="2">
-          {status === 'success' &&
-            data?.products.map((product: Product) => <ProductCard key={product.id} product={product} />)}
-        </SimpleGrid>
+    <>
+      <Flex flexDir={{ lg: 'row', sm: 'column' }}>
+        {/* Categories */}
+        {largerThanMd ? (
+          <CategoryList categories={categories.data ?? []} />
+        ) : (
+          <Box my="2">
+            <Button aria-label="drawer menu toggle button" colorScheme="facebook" onClick={onOpen}>
+              Categories <Icon as={RiFilterFill} w={5} h={5} />
+            </Button>
+          </Box>
+        )}
+        <Box maxW="container.lg">
+          {/* Products */}
+          <SimpleGrid maxW="container.lg" columns={[2, null, 3]} spacing="2">
+            {status === 'success' &&
+              data?.products.map((product: Product) => <ProductCard key={product.id} product={product} />)}
+          </SimpleGrid>
 
-        {/* Pagination */}
-        <Flex maxW="container.lg" align="center" justify="center" marginTop="5" marginBottom="5">
-          <Button
-            mr="4"
-            onClick={() => {
-              setSkip(0);
-              setPages(1);
-            }}
-            disabled={skip === 0}
-          >
-            <Icon as={RiArrowLeftSFill} fontSize="2xl" />
-          </Button>
-          <Button
-            mr="4"
-            onClick={() => {
-              setSkip((prev) => Math.max(prev - 9, 0));
-              setPages((prev) => prev - 1);
-            }}
-            disabled={skip === 0}
-          >
-            <Icon as={RiArrowLeftSLine} fontSize="2xl" />
-          </Button>
-          <Text>Page {pages} of ?</Text>
-          <Button
-            ml="4"
-            onClick={() => {
-              console.log(!isPreviousData);
-              if (!isPreviousData) {
-                setSkip((prev) => prev + 9);
-                setPages((prev) => prev + 1);
-              }
-            }}
-            disabled={data!.length <= 9}
-          >
-            <Icon as={RiArrowRightSLine} fontSize="2xl" />
-          </Button>
-          <Button ml="4" disabled={data!.length <= 9}>
-            <Icon as={RiArrowRightSFill} fontSize="2xl" />
-          </Button>
-        </Flex>
-      </Box>
-    </Flex>
+          {/* Pagination */}
+          <Flex maxW="container.lg" align="center" justify="center" marginTop="5" marginBottom="5">
+            <Button
+              mr="4"
+              onClick={() => {
+                setSkip(0);
+                setPages(1);
+              }}
+              disabled={skip === 0}
+            >
+              <Icon as={RiArrowLeftSFill} fontSize="2xl" />
+            </Button>
+            <Button
+              mr="4"
+              onClick={() => {
+                setSkip((prev) => Math.max(prev - 9, 0));
+                setPages((prev) => prev - 1);
+              }}
+              disabled={skip === 0}
+            >
+              <Icon as={RiArrowLeftSLine} fontSize="2xl" />
+            </Button>
+            <Text>Page {pages} of ?</Text>
+            <Button
+              ml="4"
+              onClick={() => {
+                console.log(!isPreviousData);
+                if (!isPreviousData) {
+                  setSkip((prev) => prev + 9);
+                  setPages((prev) => prev + 1);
+                }
+              }}
+              disabled={data!.length <= 9}
+            >
+              <Icon as={RiArrowRightSLine} fontSize="2xl" />
+            </Button>
+            <Button ml="4" disabled={data!.length <= 9}>
+              <Icon as={RiArrowRightSFill} fontSize="2xl" />
+            </Button>
+          </Flex>
+        </Box>
+      </Flex>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef} size="md">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>Categories</DrawerHeader>
+          <DrawerCloseButton />
+          <DrawerBody>
+            <CategoryList categories={categories.data ?? []} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 };

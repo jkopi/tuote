@@ -22,17 +22,19 @@ import { Loader } from '../Loader';
 import { ProductContext } from '../../context/ProductContext';
 import { useProduct } from '../../hooks/query';
 import { ProductSkeleton } from './ProductSkeleton';
+import { useAppMediaQuery } from '../../hooks';
 
 export const Product = () => {
   const userContext = useContext(UserContext);
   const productContext = useContext(ProductContext);
   const params = useParams();
+  const { largerThanMd } = useAppMediaQuery();
   const productId = params.productId;
 
   const { isLoading, data, error } = useProduct(productId ?? '');
 
   if (isLoading) {
-    return <ProductSkeleton/>;
+    return <ProductSkeleton />;
   }
 
   if (error) {
@@ -46,7 +48,7 @@ export const Product = () => {
   return (
     <Box>
       {data && (
-        <Flex pt="10" flexDirection={{sm: 'row' }}>
+        <Flex pt="10" justifyContent="center" flexDirection={largerThanMd ? 'row' : 'column'}>
           <Box marginRight={{ lg: '4' }}>
             <Image src={data.thumbnail} alt={data.title} objectFit="cover" />
           </Box>

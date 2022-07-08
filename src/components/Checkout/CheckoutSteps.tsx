@@ -17,7 +17,7 @@ export const CheckoutSteps = () => {
       <BreadcrumbItem color={location.pathname === '/checkout/payment' ? 'facebook.300' : 'black'}>
         <Text>Payment</Text>
       </BreadcrumbItem>
-      <BreadcrumbItem color={location.pathname === '/checkout/confirmation/*' ? 'facebook.300' : 'black'}>
+      <BreadcrumbItem color={location.pathname.includes('/checkout/confirmation/') ? 'facebook.300' : 'black'}>
         <Text>Confirmation</Text>
       </BreadcrumbItem>
     </Breadcrumb>
