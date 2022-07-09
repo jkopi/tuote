@@ -6,6 +6,7 @@ import { RiShoppingCartLine } from 'react-icons/ri';
 import { Rating } from '.';
 import { UserContext } from '../../context/UserContext';
 import { originalPrice } from '../../utils';
+import { useAppMediaQuery } from '../../hooks';
 
 type ProductCardProps = {
   product: Product;
@@ -14,6 +15,7 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
+  const media = useAppMediaQuery();
 
   return (
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" cursor="pointer">
@@ -30,14 +32,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
           {product.title}
         </Box>
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" flexDirection={media.largerThanMd ? "row" : "column"}>
           {product.discountPercentage ? (
-            <Box display="flex" justifyContent="center" alignItems="center">
+            <Box display="flex" justifyContent={media.largerThanMd ? "center" : "flex-start"} alignItems={"center"}>
               <Text mr="2" fontSize="2xl" fontWeight="bold" color="red.400">
-                {product.price},00 €
+                {product.price},00
               </Text>
               <Text as="s" fontSize="lg" fontWeight="bold" color="gray.500">
-                {originalPrice(product.price, product.discountPercentage)} €
+                {originalPrice(product.price, product.discountPercentage)}
               </Text>
             </Box>
           ) : (

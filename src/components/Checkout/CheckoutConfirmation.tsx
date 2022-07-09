@@ -18,8 +18,6 @@ interface ConfirmationLocation extends Location {
 export const CheckoutConfirmation = () => {
   const checkoutContext = useContext(CheckoutContext);
   const location = useLocation() as ConfirmationLocation;
-  console.log(location.state.paymentId);
-  console.log(location.state.orderItems);
 
   if (!location.state) {
     return <p>Order state not found!</p>;
@@ -28,11 +26,14 @@ export const CheckoutConfirmation = () => {
   return (
     <Container centerContent maxW="4xl" mb="36">
       <Box w="full">
-        <Stack>
+        <Stack gap={4}>
           <Flex alignItems="center" gap="4" my="8">
             <Icon as={RiCheckboxCircleLine} color="whatsapp.600" w={10} h={10} />
             <Heading as="h1">Order summary</Heading>
           </Flex>
+          <Box>
+            <Text>Transaction <strong>{location.state.paymentId}</strong> was successfully made!</Text>
+          </Box>
           <OrderSummary cartItems={location.state.orderItems} deliveryMethod={checkoutContext?.deliveryMethod} />
           <Flex justifyContent="space-between">
             <Text fontWeight="semibold">Total</Text>

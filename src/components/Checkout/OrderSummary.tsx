@@ -1,6 +1,7 @@
 import { Box, Divider, Flex, Image, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Delivery } from '../../context/CheckoutContext';
+import { UserContext } from '../../context/UserContext';
 import { Product } from '../../interfaces';
 import { calculateTotalCartPrice } from '../../utils';
 
@@ -10,6 +11,8 @@ type Props = {
 };
 
 export const OrderSummary = ({ cartItems, deliveryMethod }: Props) => {
+  const userContext = useContext(UserContext);
+
   return (
     <Box>
       {cartItems?.map((item) => (
@@ -19,7 +22,11 @@ export const OrderSummary = ({ cartItems, deliveryMethod }: Props) => {
             <Text fontSize="lg">{item.title}</Text>
             <Box>
               <Text>{item.price},00 €</Text>
-              <Text>Remove</Text>
+              <Text cursor="pointer" color="facebook.400" fontWeight="semibold" _hover={{ color: 'facebook.300' }}
+                onClick={() => userContext?.removeCartItem(item.id)}
+              >
+                Remove
+              </Text>
             </Box>
           </Flex>
           <Divider my="20px" />

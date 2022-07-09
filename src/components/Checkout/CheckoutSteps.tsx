@@ -1,23 +1,23 @@
-import { Breadcrumb, BreadcrumbItem, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { Breadcrumb, BreadcrumbItem, Text, useColorMode } from '@chakra-ui/react';
 import { BsChevronRight } from 'react-icons/bs';
-import { useLocation, useParams } from 'react-router-dom';
-import { CheckoutContext } from '../../context/CheckoutContext';
+import { useLocation } from 'react-router-dom';
 
 export const CheckoutSteps = () => {
-  const checkoutContext = useContext(CheckoutContext);
+  const mode = useColorMode();
   const location = useLocation();
-  const params = useParams();
+  console.log(mode.colorMode)
+
+  let txtColor = mode.colorMode === "dark" ? "white" : "black";
 
   return (
     <Breadcrumb spacing="8px" separator={<BsChevronRight />}>
-      <BreadcrumbItem color={location.pathname === '/checkout' ? 'facebook.300' : 'black'}>
+      <BreadcrumbItem color={location.pathname === '/checkout' ? 'facebook.300' : txtColor}>
         <Text>Shipping</Text>
       </BreadcrumbItem>
-      <BreadcrumbItem color={location.pathname === '/checkout/payment' ? 'facebook.300' : 'black'}>
+      <BreadcrumbItem color={location.pathname === '/checkout/payment' ? 'facebook.300' : txtColor}>
         <Text>Payment</Text>
       </BreadcrumbItem>
-      <BreadcrumbItem color={location.pathname.includes('/checkout/confirmation/') ? 'facebook.300' : 'black'}>
+      <BreadcrumbItem color={location.pathname.includes('/checkout/confirmation/') ? 'facebook.300' : txtColor}>
         <Text>Confirmation</Text>
       </BreadcrumbItem>
     </Breadcrumb>
