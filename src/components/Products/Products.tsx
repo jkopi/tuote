@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
   Box,
   SimpleGrid,
@@ -6,7 +6,6 @@ import {
   Text,
   Button,
   Icon,
-  useMediaQuery,
   Drawer,
   useDisclosure,
   DrawerOverlay,
@@ -15,13 +14,7 @@ import {
   DrawerHeader,
   DrawerCloseButton,
 } from '@chakra-ui/react';
-import {
-  RiArrowLeftSFill,
-  RiArrowLeftSLine,
-  RiArrowRightSFill,
-  RiArrowRightSLine,
-  RiFilterFill,
-} from 'react-icons/ri';
+import { RiArrowLeftSFill, RiArrowLeftSLine, RiArrowRightSFill, RiArrowRightSLine, RiFilterFill } from 'react-icons/ri';
 import { useQuery } from 'react-query';
 import { ProductContext } from '../../context/ProductContext';
 import { Product } from '../../interfaces/Product';
@@ -31,16 +24,12 @@ import ProductCard from './ProductCard';
 import { useCategories } from '../../hooks/query';
 import { queryClient } from '../../App';
 import { CategoryList } from '../Category/CategoryList';
-import { breakpoints } from '../../config/chakra';
 import { useAppMediaQuery } from '../../hooks';
 
 export const Products = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
   const productContext = useContext(ProductContext);
-  const [limit, setLimit] = useState<number>(9); // limit of products
-  const [skip, setSkip] = useState<number>(0); // how many products is wanted to be skipped
-  const [pages, setPages] = useState<number>(1); // how many pages of products
 
   const { largerThanMd } = useAppMediaQuery();
 
@@ -49,8 +38,9 @@ export const Products = () => {
 
   // use paginated strategy for fetching products from API
   const { isLoading, data, isPreviousData, error, status } = useQuery(
-    ['products', productContext?.category, skip],
-    () => fetchPaginatedProducts(productContext?.category, limit, skip),
+    ['products', productContext?.category, productContext?.paginationSkip],
+    () =>
+      fetchPaginatedProducts(productContext?.category, productContext?.productLimit, productContext?.paginationSkip),
     {
       initialData: () => {
         const initialProducts = queryClient.getQueryData<Product[]>(['products', '', 0]) ?? [];
@@ -62,6 +52,7 @@ export const Products = () => {
       keepPreviousData: true,
     }
   );
+  console.log(data);
 
   if (isLoading) {
     return <Loader />;
@@ -90,46 +81,36 @@ export const Products = () => {
             {status === 'success' &&
               data?.products.map((product: Product) => <ProductCard key={product.id} product={product} />)}
           </SimpleGrid>
-
           {/* Pagination */}
           <Flex maxW="container.lg" align="center" justify="center" marginTop="5" marginBottom="5">
             <Button
               mr="4"
-              onClick={() => {
-                setSkip(0);
-                setPages(1);
-              }}
-              disabled={skip === 0}
+              onClick={() => productContext?.firstPage()}
+              disabled={productContext?.paginationSkip === 0}
             >
               <Icon as={RiArrowLeftSFill} fontSize="2xl" />
             </Button>
             <Button
               mr="4"
-              onClick={() => {
-                setSkip((prev) => Math.max(prev - 9, 0));
-                setPages((prev) => prev - 1);
-              }}
-              disabled={skip === 0}
+              onClick={() => productContext?.prevPage()}
+              disabled={productContext?.paginationSkip === 0}
             >
               <Icon as={RiArrowLeftSLine} fontSize="2xl" />
             </Button>
-            <Text>Page {pages} of ?</Text>
+            <Text>Page {productContext?.pageNumber} of ?</Text>
             <Button
               ml="4"
               onClick={() => {
                 console.log(!isPreviousData);
-                if (!isPreviousData) {
-                  setSkip((prev) => prev + 9);
-                  setPages((prev) => prev + 1);
-                }
+                if (!isPreviousData) productContext?.nextPage();
               }}
-              disabled={data!.length <= 9}
+              disabled={data?.total <= 9}
             >
               <Icon as={RiArrowRightSLine} fontSize="2xl" />
             </Button>
-            <Button ml="4" disabled={data!.length <= 9}>
+            {/* <Button ml="4" disabled={data!.length <= 9}>
               <Icon as={RiArrowRightSFill} fontSize="2xl" />
-            </Button>
+            </Button> */}
           </Flex>
         </Box>
       </Flex>
