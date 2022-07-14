@@ -16,9 +16,9 @@ export async function fetchProduct(productId: string) {
 }
 
 export async function fetchPaginatedProducts(category?: string, limit?: number, skipAmount = 0) {
-  const response = await client.get(`/${category ? '/category/' + category : ''}?limit=${limit}&skip=${skipAmount}`);
+  const { data } = await client.get(category ? `/category/${category}` : '' + `?limit=${limit}&skip=${skipAmount}`)
 
-  return response.data;
+  return data;
 }
 
 export async function fetchCategories() {
