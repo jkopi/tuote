@@ -1,6 +1,6 @@
 # tuote
 
-A fictional shopping app made with [DummyJSON product API](https://dummyjson.com/docs/products)
+Just a small fun shopping app I made for learning the basics of [React Query](https://react-query-v3.tanstack.com/) and also to experiment with [React Context](https://reactjs.org/docs/context.html)
 
 ## ⏯️ Demo
 https://product-app-jkopi.vercel.app/
