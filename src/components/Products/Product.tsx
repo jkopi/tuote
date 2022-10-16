@@ -92,9 +92,6 @@ export const Product = () => {
                 >
                   Add to cart
                 </Button>
-                <Button bg="red.300">
-                  <Icon as={RiHeartLine} />
-                </Button>
               </Flex>
               <Divider my="5" />
               <Text fontSize="xl">{data.description}</Text>
